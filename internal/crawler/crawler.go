@@ -7,6 +7,7 @@ import (
 	neturl "net/url"
 	"strconv"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	"github.com/abuiliazeed/gosearch/internal/storage"
@@ -28,8 +29,10 @@ type CollyCrawler struct {
 	mu               sync.RWMutex
 	ctx              context.Context
 	cancel           context.CancelFunc
+	cancelOnce       sync.Once       // Ensure cancel is only called once
 	wg               sync.WaitGroup
 	complete         bool
+	pendingReqs      int32          // Track pending async requests
 }
 
 // NewCollyCrawler creates a new Colly-based crawler.
@@ -106,17 +109,38 @@ func (c *CollyCrawler) Start(ctx context.Context, seeds []string) error {
 		c.stats.EndTime = time.Now()
 	}()
 
-	// Wait for context cancellation
-	<-ctx.Done()
-	c.cancel()
-	c.wg.Wait()
+	// Wait for context cancellation or all work done
+	ticker := time.NewTicker(100 * time.Millisecond)
+	defer ticker.Stop()
 
-	// Check for errors
-	select {
-	case err := <-errChan:
-		return err
-	default:
-		return nil
+	for {
+		select {
+		case err := <-errChan:
+			// Error occurred, cancel and wait for workers
+			c.cancelOnce.Do(func() { c.cancel() })
+			c.wg.Wait()
+			return err
+		case <-ctx.Done():
+			// Context cancelled externally, wait for workers
+			c.cancelOnce.Do(func() { c.cancel() })
+			c.wg.Wait()
+			return nil
+		case <-ticker.C:
+			// Check if all work is complete
+			c.mu.RLock()
+			pending := atomic.LoadInt32(&c.pendingReqs)
+			frontierLen := c.frontier.Len()
+			allDone := c.complete || (frontierLen == 0 && pending == 0)
+			c.mu.RUnlock()
+
+			if allDone {
+				// All work done, set complete flag
+				c.complete = true
+				c.stats.EndTime = time.Now()
+				// Cancel context - workers will detect this in next iteration
+				c.cancelOnce.Do(func() { c.cancel() })
+			}
+		}
 	}
 }
 
@@ -188,6 +212,9 @@ func (c *CollyCrawler) worker(id int, errChan chan<- error) {
 			// Store depth in request context (must be stored as string for Colly)
 			ctx := colly.NewContext()
 			ctx.Put("depth", fmt.Sprintf("%d", url.Depth))
+
+			// Track pending request
+			atomic.AddInt32(&c.pendingReqs, 1)
 
 			// Visit URL with context
 			if err := collector.Request("GET", url.URL, nil, ctx, nil); err != nil {
@@ -273,6 +300,9 @@ func (c *CollyCrawler) createCollector(workerID int, errChan chan<- error) *coll
 
 	// On response - prepare to parse HTML
 	collector.OnResponse(func(r *colly.Response) {
+		// Mark request as completed
+		atomic.AddInt32(&c.pendingReqs, -1)
+
 		// Parse URL
 		parsedURL, err := neturl.Parse(r.Request.URL.String())
 		if err != nil {
@@ -392,6 +422,9 @@ func (c *CollyCrawler) createCollector(workerID int, errChan chan<- error) *coll
 
 	// On error - detect blocks and rate limits
 	collector.OnError(func(r *colly.Response, err error) {
+		// Mark request as completed
+		atomic.AddInt32(&c.pendingReqs, -1)
+
 		c.mu.Lock()
 		c.stats.URLsFailed++
 		c.mu.Unlock()
