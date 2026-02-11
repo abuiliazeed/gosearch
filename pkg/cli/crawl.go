@@ -44,7 +44,7 @@ func runCrawl(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return fmt.Errorf("failed to create logger: %w", err)
 	}
-	defer logger.Sync()
+	defer func() { _ = logger.Sync() }()
 
 	// Initialize storage
 	docStore, err := storage.NewDocumentStore(pagesPath)

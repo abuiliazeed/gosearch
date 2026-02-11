@@ -48,11 +48,11 @@ func init() {
 	serveCmd.Flags().Duration("idle-timeout", 120*time.Second, "idle timeout")
 
 	// Bind flags to viper
-	viper.BindPFlag("serve.host", serveCmd.Flags().Lookup("host"))
-	viper.BindPFlag("serve.port", serveCmd.Flags().Lookup("port"))
-	viper.BindPFlag("serve.read-timeout", serveCmd.Flags().Lookup("read-timeout"))
-	viper.BindPFlag("serve.write-timeout", serveCmd.Flags().Lookup("write-timeout"))
-	viper.BindPFlag("serve.idle-timeout", serveCmd.Flags().Lookup("idle-timeout"))
+	_ = viper.BindPFlag("serve.host", serveCmd.Flags().Lookup("host"))
+	_ = viper.BindPFlag("serve.port", serveCmd.Flags().Lookup("port"))
+	_ = viper.BindPFlag("serve.read-timeout", serveCmd.Flags().Lookup("read-timeout"))
+	_ = viper.BindPFlag("serve.write-timeout", serveCmd.Flags().Lookup("write-timeout"))
+	_ = viper.BindPFlag("serve.idle-timeout", serveCmd.Flags().Lookup("idle-timeout"))
 }
 
 func runServe(cmd *cobra.Command, args []string) error {
@@ -68,6 +68,8 @@ func runServe(cmd *cobra.Command, args []string) error {
 	indexPath := viper.GetString("index-path")
 	if indexPath == "" {
 		indexPath = dataDir + "/index"
+	} else {
+		// indexPath already set via config
 	}
 
 	// Initialize indexer, searcher, ranker, and document store
@@ -96,6 +98,7 @@ func runServe(cmd *cobra.Command, args []string) error {
 }
 
 // serveMain is the actual server implementation (to be integrated).
+//nolint:unused // Intentionally unused - placeholder for future implementation
 func serveMain(host string, port int, _, _, _ time.Duration, dataDir string) error {
 	// Create server config
 	config := &server.Config{
@@ -116,7 +119,7 @@ func serveMain(host string, port int, _, _, _ time.Duration, dataDir string) err
 	}
 
 	logger, _ := zap.NewProduction()
-	defer logger.Sync()
+	defer func() { _ = logger.Sync() }()
 
 	tokenizer := indexer.NewTokenizer(indexer.DefaultTokenizerConfig())
 	indexerInstance := indexer.NewIndexerWithTokenizer(indexStore, tokenizer, logger)
