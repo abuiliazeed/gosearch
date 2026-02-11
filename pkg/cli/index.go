@@ -192,7 +192,7 @@ var indexClearCmd = &cobra.Command{
 		if !force {
 			fmt.Printf("Are you sure you want to clear the index at %s? (y/N): ", indexPath)
 			var response string
-			fmt.Scanln(&response)
+			_, _ = fmt.Scanln(&response)
 			if response != "y" && response != "Y" {
 				fmt.Println("Aborted")
 				return nil

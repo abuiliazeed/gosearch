@@ -142,14 +142,14 @@ func NewCrawlerProgress(expectedURLs int64) *CrawlerProgress {
 // AddCrawled increments the crawled counter.
 func (cp *CrawlerProgress) AddCrawled(n int64) {
 	if cp.total != nil {
-		cp.total.Add(n)
+		_ = cp.total.Add(n)
 	}
 }
 
 // AddQueued increments the queued counter.
 func (cp *CrawlerProgress) AddQueued(n int64) {
 	if cp.urlsQueued != nil {
-		cp.urlsQueued.Add(n)
+		_ = cp.urlsQueued.Add(n)
 	}
 }
 
@@ -180,14 +180,14 @@ func NewIndexerProgress(totalDocs, totalTerms int64) *IndexerProgress {
 // AddDoc increments the document counter.
 func (ip *IndexerProgress) AddDoc(n int64) {
 	if ip.docs != nil {
-		ip.docs.Add(n)
+		_ = ip.docs.Add(n)
 	}
 }
 
 // AddTerm increments the term counter.
 func (ip *IndexerProgress) AddTerm(n int64) {
 	if ip.terms != nil {
-		ip.terms.Add(n)
+		_ = ip.terms.Add(n)
 	}
 }
 
