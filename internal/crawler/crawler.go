@@ -134,11 +134,15 @@ func (c *CollyCrawler) Start(ctx context.Context, seeds []string) error {
 			c.mu.RUnlock()
 
 			if allDone {
-				// All work done, set complete flag
+				// All work done, set complete flag and cancel
+				c.mu.Lock()
 				c.complete = true
 				c.stats.EndTime = time.Now()
-				// Cancel context - workers will detect this in next iteration
+				c.mu.Unlock()
+				// Cancel context and wait for workers to finish
 				c.cancelOnce.Do(func() { c.cancel() })
+				c.wg.Wait()
+				return nil
 			}
 		}
 	}
@@ -160,7 +164,8 @@ func (c *CollyCrawler) worker(id int, errChan chan<- error) {
 			url := c.frontier.Pop()
 			if url == nil {
 				// No more URLs, check if we should wait or exit
-				if c.frontier.Len() == 0 {
+				// Don't exit while there are pending async requests
+				if c.frontier.Len() == 0 && atomic.LoadInt32(&c.pendingReqs) == 0 {
 					return
 				}
 				time.Sleep(100 * time.Millisecond)
@@ -218,6 +223,8 @@ func (c *CollyCrawler) worker(id int, errChan chan<- error) {
 
 			// Visit URL with context
 			if err := collector.Request("GET", url.URL, nil, ctx, nil); err != nil {
+				// Request failed immediately, callbacks won't fire - decrement counter
+				atomic.AddInt32(&c.pendingReqs, -1)
 				errChan <- fmt.Errorf("failed to visit %s: %w", url.URL, err)
 				c.politeness.Release(url.URL)
 				continue

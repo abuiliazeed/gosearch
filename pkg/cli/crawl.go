@@ -91,6 +91,7 @@ func runCrawl(cmd *cobra.Command, args []string) error {
 	// Start crawling in a goroutine
 	var crawlErr error
 	var crawlWg sync.WaitGroup
+	crawlDone := make(chan struct{})
 
 	crawlWg.Add(1)
 	go func() {
@@ -105,6 +106,7 @@ func runCrawl(cmd *cobra.Command, args []string) error {
 		fmt.Println()
 
 		crawlErr = crawlr.Start(ctx, args)
+		close(crawlDone)
 	}()
 
 	// Monitor progress
