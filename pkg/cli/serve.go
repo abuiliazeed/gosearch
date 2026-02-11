@@ -70,6 +70,7 @@ func runServe(cmd *cobra.Command, args []string) error {
 		indexPath = dataDir + "/index"
 	} else {
 		// indexPath already set via config
+		_ = indexPath // Explicitly mark as used to satisfy staticcheck
 	}
 
 	// Initialize indexer, searcher, ranker, and document store
