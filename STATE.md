@@ -1,7 +1,7 @@
 # Project State — gosearch
 
 ## Last Updated
-_2026-02-11 — Seeding features implemented_
+_2026-03-05 — Lint fixes for misspell and ineffassign_
 
 ---
 
@@ -103,6 +103,11 @@ _2026-02-11 — Seeding features implemented_
   - Created API test script (scripts/test_api.sh) for HTTP endpoint testing
   - Created mock block server script (scripts/mock_block_server.sh) for block detection testing
   - Added test targets to Makefile (test-smoke, test-pipeline, test-persistence, test-api, test-all)
+- **Quality Improvements** (2026-03-05)
+  - Fixed misspell issues: "cancelled" → "canceled" in comments and user messages
+  - Removed ineffectual assignment to indexPath in serve command
+  - Added nolint comments for intentional test typos in fuzzy matching tests
+  - Updated .golangci.yml for golangci-lint v2 compatibility
 
 ---
 

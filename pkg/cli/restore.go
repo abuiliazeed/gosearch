@@ -76,7 +76,7 @@ func runRestore(cmd *cobra.Command, args []string) error {
 		var response string
 		_, _ = fmt.Scanln(&response)
 		if response != "y" && response != "Y" {
-			fmt.Println("Restore cancelled")
+			fmt.Println("Restore canceled")
 			return nil
 		}
 	}

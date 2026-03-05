@@ -31,7 +31,7 @@ func NewIndex() *Index {
 // and adding tokens to the inverted index.
 //
 // The ctx parameter controls cancellation. Returns an error if
-// the document cannot be indexed or context is cancelled.
+// the document cannot be indexed or context is canceled.
 func (idx *Index) IndexDocument(ctx context.Context, tokenizer *Tokenizer, doc *DocumentInput) error {
 	if doc == nil || doc.DocID == "" {
 		return fmt.Errorf("%w: document ID is required", ErrInvalidDocument)

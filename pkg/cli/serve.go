@@ -80,15 +80,6 @@ func runServe(cmd *cobra.Command, args []string) error {
 	// Initialize components
 	fmt.Println("Initializing gosearch server...")
 
-	// Create index store
-	indexPath := viper.GetString("index-path")
-	if indexPath == "" {
-		indexPath = dataDir + "/index"
-	} else {
-		// indexPath already set via config
-		_ = indexPath // Explicitly mark as used to satisfy staticcheck
-	}
-
 	// Get timeout values
 	readTimeout := viper.GetDuration("serve.read-timeout")
 	writeTimeout := viper.GetDuration("serve.write-timeout")

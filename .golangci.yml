@@ -1,5 +1,6 @@
 # golangci-lint configuration for gosearch
 # https://golangci-lint.run/usage/configuration/
+version: 2
 
 version: "2"
 
@@ -14,12 +15,17 @@ run:
   go: "1.24"
 
 output:
-  formats:
-    text:
-      # Print lines of code with issue
-      print-issued-lines: true
-      # Print linter name in the end of issue text
-      print-linter-name: true
+  # Format: colored-line-number|line-number|json|tab|checkstyle|code-climate
+  format: colored-line-number
+
+  # Print lines of code with issue
+  print-issued-lines: true
+
+  # Print linter name in the end of issue text
+  print-linter-name: true
+
+  # Sort results by: filepath, line and column
+  sort-results: true
 
 linters:
   # Enable specific linters
@@ -36,6 +42,8 @@ linters:
     - unparam
     - prealloc
     - copyloopvar
+    - godot
+    - gocyclo
 
   # Disable specific linters
   disable:
@@ -45,14 +53,18 @@ linters:
     - err113  # Dynamic error checks - too strict
     - errcheck  # Too many false positives in v2, handled by code review
 
-  # Linter-specific settings
-  settings:
-    govet:
-      # Enable all analyzers
-      enable-all: true
-      disable:
-        - shadow # Can be noisy
-        - fieldalignment # Too noisy for existing code
+formatters:
+  # Enable specific formatters
+  enable:
+    - gofumpt
+    - goimports
+
+linters-settings:
+  govet:
+    # Enable all analyzers
+    enable-all: true
+    disable:
+      - shadow # Can be noisy
 
     staticcheck:
       # Select specific checks
@@ -135,29 +147,6 @@ linters:
           - gosec
         text: "G104|G115|G301|G304|G306|G706"
 
-      # Exclude gocritic ifElseChain (style preference, not a bug)
-      - linters:
-          - gocritic
-        text: "ifElseChain"
-
-    # Which file paths to exclude
-    paths:
-      - bin
-      - data
-      - dist
-      # Skip pkg/cli from certain linters via rules above
-
-formatters:
-  enable:
-    - gofmt
-    - goimports
-
-  settings:
-    goimports:
-      # Put imports beginning with prefix after 3rd-party packages
-      local-prefixes:
-        - github.com/abuiliazeed/gosearch
-
 issues:
   # Show only new issues
   new: false
@@ -170,3 +159,32 @@ issues:
 
   # Make issues output unique by line
   uniq-by-line: true
+
+  # Which dirs to skip
+  exclude-dirs:
+    - bin
+    - data
+    - dist
+
+  # Which files to skip
+  exclude-files:
+    - ".*\\.pb\\.go$"
+
+  # Exclude specific issues
+  exclude-rules:
+    # Exclude some linters from running on tests files
+    - path: _test\.go
+      linters:
+        - gocyclo
+        - errcheck
+        - dupl
+        - gosec
+        - goconst
+
+    # Exclude known issues
+    - linters:
+        - staticcheck
+      text: "SA9003:"
+
+  # Independently of option `exclude` we use default exclude patterns
+  exclude-use-default: false
