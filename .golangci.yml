@@ -1,4 +1,4 @@
-version: 2
+version: "2"
 
 run:
   timeout: 5m
@@ -33,94 +33,47 @@ formatters:
     - gofumpt
     - goimports
 
-linters-settings:
-  govet:
-    enable-all: true
-    disable:
-      - shadow
-
-  gosec:
-    exclude:
-      - G104
-      - G115
-      - G204
-      - G301
-      - G304
-      - G306
-      - G706
-
-  staticcheck:
-    checks: ["all"]
-
-  misspell:
-    locale: US
-
-  revive:
-    enable-all-rules: false
-    rules:
-      - name: blank-imports
-      - name: context-as-argument
-      - name: context-keys-type
-      - name: dot-imports
-      - name: error-return
-      - name: error-strings
-      - name: error-naming
-      - name: if-return
-      - name: increment-decrement
-      - name: var-naming
-      - name: var-declaration
-      - name: package-comments
-      - name: range
-      - name: receiver-naming
-      - name: time-naming
-      - name: unexported-return
-      - name: indent-error-flow
-      - name: errorf
-      - name: empty-block
-      - name: superfluous-else
-      - name: unused-parameter
-      - name: unreachable-code
-
 issues:
   new: false
   max-issues-per-linter: 0
   max-same-issues: 0
   uniq-by-line: true
-  exclude-dirs:
-    - bin
-    - data
-    - dist
-  exclude-files:
-    - ".*\\.pb\\.go$"
-  exclude-rules:
-    # Exclude gosec and errcheck for test files
-    - path: ".*_test.go"
-      linters: [errcheck, gosec]
-    # Gosec exclusions per task requirements
-    - linters: [gosec]
-      text: "G104"
-    - linters: [gosec]
-      text: "G115"
-    - linters: [gosec]
-      text: "G204"
-    - linters: [gosec]
-      text: "G301"
-    - linters: [gosec]
-      text: "G304"
-    - linters: [gosec]
-      text: "G306"
-    - linters: [gosec]
-      text: "G706"
-    # Staticcheck exclusions per task requirements - try severity
-    - linters: [staticcheck]
-      text: "SA9003"
-    - linters: [staticcheck]
-      text: "QF1003"
-    - linters: [staticcheck]
-      text: "QF1012"
-    # Revive exclusions per task requirements
-    - linters: [revive]
-      text: "exported"
-    - linters: [revive]
-      text: "redefines-builtin-id"
-  exclude-use-default: false
+
+  exclusions:
+    generated: lax
+    paths:
+      - bin
+      - data
+      - dist
+      - ".*\\.pb\\.go$"
+    rules:
+      # Exclude gosec and errcheck for test files
+      - path: ".*_test.go"
+        linters: [errcheck, gosec]
+      # Gosec exclusions per task requirements
+      - linters: [gosec]
+        text: "G104"
+      - linters: [gosec]
+        text: "G115"
+      - linters: [gosec]
+        text: "G204"
+      - linters: [gosec]
+        text: "G301"
+      - linters: [gosec]
+        text: "G304"
+      - linters: [gosec]
+        text: "G306"
+      - linters: [gosec]
+        text: "G706"
+      # Staticcheck exclusions per task requirements
+      - linters: [staticcheck]
+        text: "SA9003"
+      - linters: [staticcheck]
+        text: "QF1003"
+      - linters: [staticcheck]
+        text: "QF1012"
+      # Revive exclusions per task requirements
+      - linters: [revive]
+        text: "exported"
+      - linters: [revive]
+        text: "redefines-builtin-id"
