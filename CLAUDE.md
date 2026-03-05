@@ -10,7 +10,6 @@
 
 **Stack:** Go 1.21+ | Colly (crawler) | Custom Inverted Index | Redis (cache) | BoltDB/Badger (storage) | Cobra (CLI)
 
-**Key files:** Always read `PROJECT.md`, `ROADMAP.md`, and `STATE.md` before starting any work.
 
 ---
 

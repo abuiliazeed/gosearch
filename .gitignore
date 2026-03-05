@@ -77,3 +77,5 @@ seeds/
 prompt.md
 test_debug.txt
 test_output.txt
+
+.docs/
