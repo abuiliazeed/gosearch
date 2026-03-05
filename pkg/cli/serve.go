@@ -63,7 +63,7 @@ func init() {
 	_ = viper.BindPFlag("serve.idle-timeout", serveCmd.Flags().Lookup("idle-timeout"))
 }
 
-func runServe(cmd *cobra.Command, args []string) error {
+func runServe(_ *cobra.Command, _ []string) error {
 	// Get configuration
 	dataDir := viper.GetString("data-dir")
 	if err := requireSchemaVersion(dataDir); err != nil {
@@ -114,7 +114,7 @@ func serveMain(host string, port int, _, _, _ time.Duration, dataDir string, cor
 	if err != nil {
 		return fmt.Errorf("failed to create index store: %w", err)
 	}
-	defer indexStore.Close()
+	defer func() { _ = indexStore.Close() }()
 
 	docStore, err := storage.NewDocumentStore(dataDir + "/pages")
 	if err != nil {

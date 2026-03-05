@@ -2,8 +2,6 @@
 # https://golangci-lint.run/usage/configuration/
 version: 2
 
-version: "2"
-
 run:
   # Timeout for analysis
   timeout: 5m
@@ -103,16 +101,9 @@ linters-settings:
         - name: unreachable-code
         - name: redefines-builtin-id
 
-    gosec:
-      # Select the severity to include in report
-      severity: "medium"
-      # Select the confidence to include in report
-      confidence: "medium"
-
-  # Exclusions for lint issues
-  exclusions:
-    # Mode of the generated files analysis
-    generated: lax
+  misspell:
+    # Correct spellings using locale preferences
+    locale: US
 
     # Predefined exclusion presets
     presets:
@@ -142,10 +133,10 @@ linters-settings:
         linters:
           - errcheck
 
-      # Exclude gosec issues that are false positives for this project
-      - linters:
-          - gosec
-        text: "G104|G115|G301|G304|G306|G706"
+    # Exclude specific checks
+    excludes:
+      - G104  # Errors unchecked (we already use errcheck)
+      - G307  # Deferring file close (our pattern is safe)
 
 issues:
   # Show only new issues
@@ -172,18 +163,12 @@ issues:
 
   # Exclude specific issues
   exclude-rules:
-    # Exclude some linters from running on tests files
+    # Exclude errcheck and gosec for test files
     - path: _test\.go
-      linters:
-        - gocyclo
-        - errcheck
-        - dupl
-        - gosec
-        - goconst
+      linters: [errcheck, gosec]
 
     # Exclude known issues
-    - linters:
-        - staticcheck
+    - linters: [staticcheck]
       text: "SA9003:"
 
   # Independently of option `exclude` we use default exclude patterns

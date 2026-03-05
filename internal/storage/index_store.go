@@ -167,7 +167,7 @@ func (is *IndexStore) ListTerms() ([]string, error) {
 	var terms []string
 	err := is.db.View(func(tx *bolt.Tx) error {
 		b := tx.Bucket(TermsBucket)
-		return b.ForEach(func(k, v []byte) error {
+		return b.ForEach(func(k, _ []byte) error {
 			terms = append(terms, string(k))
 			return nil
 		})
@@ -340,7 +340,7 @@ func (is *IndexStore) ListAllPostings() ([]string, error) {
 		if b == nil {
 			return nil
 		}
-		return b.ForEach(func(k, v []byte) error {
+		return b.ForEach(func(k, _ []byte) error {
 			terms = append(terms, string(k))
 			return nil
 		})
@@ -416,7 +416,7 @@ func (is *IndexStore) ListAllDocInfo() ([]string, error) {
 		if b == nil {
 			return nil
 		}
-		return b.ForEach(func(k, v []byte) error {
+		return b.ForEach(func(k, _ []byte) error {
 			docIDs = append(docIDs, string(k))
 			return nil
 		})

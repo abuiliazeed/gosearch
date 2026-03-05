@@ -44,10 +44,10 @@ func init() {
 	rootCmd.PersistentFlags().String("log-format", "text", "log format: text or json")
 
 	// Bind flags to viper
-	viper.BindPFlag("config", rootCmd.PersistentFlags().Lookup("config"))
-	viper.BindPFlag("data-dir", rootCmd.PersistentFlags().Lookup("data-dir"))
-	viper.BindPFlag("verbose", rootCmd.PersistentFlags().Lookup("verbose"))
-	viper.BindPFlag("log-format", rootCmd.PersistentFlags().Lookup("log-format"))
+	_ = viper.BindPFlag("config", rootCmd.PersistentFlags().Lookup("config"))
+	_ = viper.BindPFlag("data-dir", rootCmd.PersistentFlags().Lookup("data-dir"))
+	_ = viper.BindPFlag("verbose", rootCmd.PersistentFlags().Lookup("verbose"))
+	_ = viper.BindPFlag("log-format", rootCmd.PersistentFlags().Lookup("log-format"))
 
 	// Set default Redis configuration
 	viper.SetDefault("redis.host", "localhost:6379")
@@ -88,43 +88,43 @@ func newComprehensiveHelpCommand() *cobra.Command {
 }
 
 func renderComprehensiveRootHelp(w io.Writer, root *cobra.Command) {
-	fmt.Fprintln(w, root.Long)
-	fmt.Fprintln(w)
-	fmt.Fprintf(w, "Usage:\n  %s [command]\n\n", root.CommandPath())
+	_, _ = fmt.Fprintln(w, root.Long)
+	_, _ = fmt.Fprintln(w)
+	_, _ = fmt.Fprintf(w, "Usage:\n  %s [command]\n\n", root.CommandPath())
 
-	fmt.Fprintln(w, "Command Tree:")
+	_, _ = fmt.Fprintln(w, "Command Tree:")
 	printCommandTree(w, root, "")
-	fmt.Fprintln(w)
+	_, _ = fmt.Fprintln(w)
 
-	fmt.Fprintln(w, "All Commands:")
+	_, _ = fmt.Fprintln(w, "All Commands:")
 	all := collectVisibleCommands(root)
 	for _, cmd := range all {
-		fmt.Fprintf(w, "  %-28s %s\n", cmd.CommandPath(), cmd.Short)
+		_, _ = fmt.Fprintf(w, "  %-28s %s\n", cmd.CommandPath(), cmd.Short)
 	}
-	fmt.Fprintln(w)
+	_, _ = fmt.Fprintln(w)
 
-	fmt.Fprintln(w, "Global Flags:")
+	_, _ = fmt.Fprintln(w, "Global Flags:")
 	printFlags(w, root.PersistentFlags(), "  ")
 
-	fmt.Fprintln(w)
-	fmt.Fprintln(w, "Command Flags:")
+	_, _ = fmt.Fprintln(w)
+	_, _ = fmt.Fprintln(w, "Command Flags:")
 	for _, cmd := range all {
 		if !cmd.LocalFlags().HasAvailableFlags() {
 			continue
 		}
-		fmt.Fprintf(w, "  %s\n", cmd.CommandPath())
+		_, _ = fmt.Fprintf(w, "  %s\n", cmd.CommandPath())
 		printFlags(w, cmd.LocalFlags(), "    ")
 	}
 
-	fmt.Fprintf(w, "\nUse \"%s <command> --help\" for command-specific details.\n", root.CommandPath())
+	_, _ = fmt.Fprintf(w, "\nUse \"%s <command> --help\" for command-specific details.\n", root.CommandPath())
 }
 
 func printCommandTree(w io.Writer, cmd *cobra.Command, indent string) {
 	children := visibleSubcommands(cmd)
 	if cmd.Parent() == nil {
-		fmt.Fprintf(w, "  %s\n", cmd.CommandPath())
+		_, _ = fmt.Fprintf(w, "  %s\n", cmd.CommandPath())
 	} else {
-		fmt.Fprintf(w, "%s- %s: %s\n", indent, cmd.Name(), cmd.Short)
+		_, _ = fmt.Fprintf(w, "%s- %s: %s\n", indent, cmd.Name(), cmd.Short)
 	}
 	for _, child := range children {
 		nextIndent := indent + "  "
@@ -161,7 +161,7 @@ func visibleSubcommands(cmd *cobra.Command) []*cobra.Command {
 
 func printFlags(w io.Writer, flags *pflag.FlagSet, indent string) {
 	if !flags.HasAvailableFlags() {
-		fmt.Fprintf(w, "%s(none)\n", indent)
+		_, _ = fmt.Fprintf(w, "%s(none)\n", indent)
 		return
 	}
 	flags.VisitAll(func(f *pflag.Flag) {
@@ -173,10 +173,10 @@ func printFlags(w io.Writer, flags *pflag.FlagSet, indent string) {
 			name = "-" + f.Shorthand + ", " + name
 		}
 		if f.DefValue != "" && f.DefValue != "false" {
-			fmt.Fprintf(w, "%s%-24s %s (default %q)\n", indent, name, f.Usage, f.DefValue)
+			_, _ = fmt.Fprintf(w, "%s%-24s %s (default %q)\n", indent, name, f.Usage, f.DefValue)
 			return
 		}
-		fmt.Fprintf(w, "%s%-24s %s\n", indent, name, f.Usage)
+		_, _ = fmt.Fprintf(w, "%s%-24s %s\n", indent, name, f.Usage)
 	})
 }
 
@@ -203,7 +203,5 @@ func initConfig() {
 	viper.AutomaticEnv()
 
 	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err == nil {
-		// Config file found and successfully parsed
-	}
+	_ = viper.ReadInConfig() // Config file is optional, ignore error if not found
 }

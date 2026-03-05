@@ -44,19 +44,11 @@ func (ds *DocumentStore) Save(doc *Document) error {
 	if err != nil {
 		return fmt.Errorf("failed to create file: %w", err)
 	}
-	defer func() {
-		if closeErr := file.Close(); closeErr != nil {
-			// Log error but don't fail
-		}
-	}()
+	defer func() { _ = file.Close() }()
 
 	// Create gzip writer
 	gzWriter := gzip.NewWriter(file)
-	defer func() {
-		if closeErr := gzWriter.Close(); closeErr != nil {
-			// Log error but don't fail
-		}
-	}()
+	defer func() { _ = gzWriter.Close() }()
 
 	// Encode document as JSON and write to gzip writer
 	if err := json.NewEncoder(gzWriter).Encode(doc); err != nil {
@@ -78,22 +70,14 @@ func (ds *DocumentStore) Get(id string) (*Document, error) {
 		}
 		return nil, fmt.Errorf("failed to open file: %w", err)
 	}
-	defer func() {
-		if closeErr := file.Close(); closeErr != nil {
-			// Log error but don't fail
-		}
-	}()
+	defer func() { _ = file.Close() }()
 
 	// Create gzip reader
 	gzReader, err := gzip.NewReader(file)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create gzip reader: %w", err)
 	}
-	defer func() {
-		if closeErr := gzReader.Close(); closeErr != nil {
-			// Log error but don't fail
-		}
-	}()
+	defer func() { _ = gzReader.Close() }()
 
 	// Decode document
 	var doc Document
@@ -225,21 +209,13 @@ func copyFile(src, dst string) error {
 	if err != nil {
 		return err
 	}
-	defer func() {
-		if closeErr := srcFile.Close(); closeErr != nil {
-			// Log error but don't fail
-		}
-	}()
+	defer func() { _ = srcFile.Close() }()
 
 	dstFile, err := os.Create(dst)
 	if err != nil {
 		return err
 	}
-	defer func() {
-		if closeErr := dstFile.Close(); closeErr != nil {
-			// Log error but don't fail
-		}
-	}()
+	defer func() { _ = dstFile.Close() }()
 
 	if _, err := io.Copy(dstFile, srcFile); err != nil {
 		return err
