@@ -142,10 +142,10 @@ go build -o bin/gosearch ./cmd/gosearch
 ./bin/gosearch tui
 
 # Start with initial query
-./bin/gosearch tui "sourcebeauty"
+./bin/gosearch tui "FIFA"
 
 # Increase result limit
-./bin/gosearch tui "sourcebeauty" --limit 200
+./bin/gosearch tui "FIFA" --limit 200
 ```
 
 <p align="center">
@@ -165,10 +165,10 @@ go build -o bin/gosearch ./cmd/gosearch
 
 ```bash
 # Get full stored markdown as JSON
-./bin/gosearch search-item "sourcebeauty" --rank 1
+./bin/gosearch search-item "FIFA" --rank 1
 
 # Export domain markdown files
-./bin/gosearch md-export sourcebeauty.com --output-dir ./exports
+./bin/gosearch md-export FIFA.com --output-dir ./exports
 ```
 
 ### Index Management
