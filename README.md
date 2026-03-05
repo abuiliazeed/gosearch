@@ -2,7 +2,6 @@
 
 [![Quality Pipeline](https://github.com/abuiliazeed/gosearch/actions/workflows/quality.yml/badge.svg?branch=main)](https://github.com/abuiliazeed/gosearch/actions/workflows/quality.yml)
 [![GoDoc](https://pkg.go.dev/badge/github.com/abuiliazeed/gosearch.svg)](https://pkg.go.dev/github.com/abuiliazeed/gosearch)
-[![Go Report Card](https://goreportcard.com/badge/github.com/abuiliazeed/gosearch)](https://goreportcard.com/report/github.com/abuiliazeed/gosearch)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Go Version](https://img.shields.io/badge/Go-1.24.2-00ADD8.svg)](https://go.dev/)
 
