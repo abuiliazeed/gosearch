@@ -203,5 +203,5 @@ func initConfig() {
 	viper.AutomaticEnv()
 
 	// If a config file is found, read it in.
-	_ = viper.ReadInConfig() // Config file is optional, ignore error if not found
+	_ = viper.ReadInConfig() // Config file is optional
 }

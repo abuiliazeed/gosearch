@@ -56,7 +56,7 @@ func TestLoad_EnvVars(t *testing.T) {
 		// That's fine, we can just skip or log.
 		t.Logf("Env var didn't override default. MaxWorkers=%d", cfg.MaxWorkers)
 	} else if cfg.MaxWorkers == 50 {
-		// Success
+		t.Logf("Successfully overrode MaxWorkers via env var. MaxWorkers=%d", cfg.MaxWorkers)
 	} else {
 		t.Errorf("Unexpected MaxWorkers: %d", cfg.MaxWorkers)
 	}

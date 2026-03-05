@@ -37,7 +37,7 @@ var indexBuildCmd = &cobra.Command{
 	Use:   "build",
 	Short: "Build the index from crawled pages",
 	Args:  cobra.NoArgs,
-	RunE: func(cmd *cobra.Command, args []string) error {
+	RunE: func(cmd *cobra.Command, _ []string) error {
 		// Get data directory
 		dataDir := viper.GetString("data-dir")
 		if err := requireSchemaVersion(dataDir); err != nil {
@@ -107,7 +107,7 @@ var indexStatsCmd = &cobra.Command{
 	Use:   "stats",
 	Short: "Show index statistics",
 	Args:  cobra.NoArgs,
-	RunE: func(cmd *cobra.Command, args []string) error {
+	RunE: func(cmd *cobra.Command, _ []string) error {
 		// Get data directory
 		dataDir := viper.GetString("data-dir")
 		if err := requireSchemaVersion(dataDir); err != nil {
@@ -236,7 +236,7 @@ var indexClearCmd = &cobra.Command{
 	Use:   "clear",
 	Short: "Clear the index",
 	Args:  cobra.NoArgs,
-	RunE: func(cmd *cobra.Command, args []string) error {
+	RunE: func(cmd *cobra.Command, _ []string) error {
 		// Get data directory
 		dataDir := viper.GetString("data-dir")
 		if err := requireSchemaVersion(dataDir); err != nil {
@@ -271,7 +271,7 @@ var indexOptimizeCmd = &cobra.Command{
 	Use:   "optimize",
 	Short: "Optimize the index",
 	Args:  cobra.NoArgs,
-	RunE: func(cmd *cobra.Command, args []string) error {
+	RunE: func(_ *cobra.Command, _ []string) error {
 		// Get data directory
 		dataDir := viper.GetString("data-dir")
 		if err := requireSchemaVersion(dataDir); err != nil {
@@ -321,7 +321,7 @@ var indexValidateCmd = &cobra.Command{
 	Use:   "validate",
 	Short: "Validate the index for consistency",
 	Args:  cobra.NoArgs,
-	RunE: func(cmd *cobra.Command, args []string) error {
+	RunE: func(_ *cobra.Command, _ []string) error {
 		// Get data directory
 		dataDir := viper.GetString("data-dir")
 		if err := requireSchemaVersion(dataDir); err != nil {

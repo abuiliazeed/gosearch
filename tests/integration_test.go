@@ -41,7 +41,7 @@ func TestFullPipeline(t *testing.T) {
 
 	t.Run("crawl_sample_page", func(t *testing.T) {
 		// Create a test server
-		server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			w.Header().Set("Content-Type", "text/html")
 			w.Write([]byte(SampleFixture().SampleHTML))
 		}))
@@ -104,7 +104,7 @@ func TestPersistence(t *testing.T) {
 	}
 
 	// First, crawl and index
-	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		w.Header().Set("Content-Type", "text/html")
 		w.Write([]byte(SampleFixture().SampleHTML))
 	}))
@@ -161,7 +161,7 @@ func TestFuzzyMatching(t *testing.T) {
 		t.Fatalf("failed to setup test dir: %v", err)
 	}
 
-	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		w.Header().Set("Content-Type", "text/html")
 		w.Write([]byte(SampleFixture().SampleHTML))
 	}))
@@ -204,7 +204,7 @@ func TestBooleanQueries(t *testing.T) {
 
 	// Use sample HTML content directly
 	htmlContent := string(ReadTestdata(t, "sample_html.html"))
-	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		w.Header().Set("Content-Type", "text/html")
 		w.Write([]byte(htmlContent))
 	}))
@@ -243,7 +243,7 @@ func TestBackupRestore(t *testing.T) {
 		t.Fatalf("failed to setup test dir: %v", err)
 	}
 
-	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		w.Header().Set("Content-Type", "text/html")
 		w.Write([]byte(SampleFixture().SampleHTML))
 	}))
@@ -298,7 +298,7 @@ func TestHTTPAPI(t *testing.T) {
 		t.Fatalf("failed to setup test dir: %v", err)
 	}
 
-	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		w.Header().Set("Content-Type", "text/html")
 		w.Write([]byte(SampleFixture().SampleHTML))
 	}))
@@ -440,7 +440,7 @@ func TestBlockDetection(t *testing.T) {
 	}
 
 	// Start a mock server that returns 429
-	blockServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	blockServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		w.Header().Set("Content-Type", "text/html")
 		w.Header().Set("Retry-After", "5")
 		w.WriteHeader(http.StatusTooManyRequests)
