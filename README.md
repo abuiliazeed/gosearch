@@ -244,24 +244,6 @@ make clean       # Clean build artifacts
 
 ---
 
-## Contributing
-
-Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
-
-1. Read [PROJECT.md](PROJECT.md) for architecture decisions
-2. Read [CLAUDE.md](CLAUDE.md) for coding standards
-3. Create a feature spec using the template in `docs/`
-4. Follow the implementation order from coding standards
-5. Run `scripts/pre-deploy.sh` before committing
-
----
-
 ## License
 
 [MIT License](LICENSE) — see LICENSE file for details.
-
----
-
-## Roadmap
-
-See [ROADMAP.md](ROADMAP.md) for the development roadmap and current progress.
