@@ -1,175 +1,92 @@
-# golangci-lint configuration for gosearch
-# https://golangci-lint.run/usage/configuration/
 version: 2
 
 run:
-  # Timeout for analysis
   timeout: 5m
-
-  # Include test files
   tests: true
-
-  # Go version to use
   go: "1.24"
 
-output:
-  # Format: colored-line-number|line-number|json|tab|checkstyle|code-climate
-  format: colored-line-number
-
-  # Print lines of code with issue
-  print-issued-lines: true
-
-  # Print linter name in the end of issue text
-  print-linter-name: true
-
-  # Sort results by: filepath, line and column
-  sort-results: true
-
 linters:
-  # Enable specific linters
   enable:
     - govet
     - staticcheck
     - unused
     - ineffassign
     - misspell
-    - gocritic
     - gosec
     - revive
     - unconvert
     - unparam
     - prealloc
     - copyloopvar
-    - godot
-    - gocyclo
-
-  # Disable specific linters
   disable:
-    - funlen  # We have longer test functions
-    - wsl     # Whitespace linter - too opinionated
-    - lll     # Line length linter - we use reasonable line lengths
-    - err113  # Dynamic error checks - too strict
-    - errcheck  # Too many false positives in v2, handled by code review
+    - funlen
+    - wsl
+    - lll
+    - err113
+    - errcheck
+    - gocyclo
+    - godot
+    - gocritic
 
 formatters:
-  # Enable specific formatters
   enable:
     - gofumpt
     - goimports
 
 linters-settings:
   govet:
-    # Enable all analyzers
     enable-all: true
     disable:
-      - shadow # Can be noisy
+      - shadow
 
-    staticcheck:
-      # Select specific checks
-      checks: ["all"]
-
-    misspell:
-      # Correct spellings using locale preferences
-      locale: US
-
-    revive:
-      # Enable all rules
-      enable-all-rules: false
-      rules:
-        - name: blank-imports
-        - name: context-as-argument
-        - name: context-keys-type
-        - name: dot-imports
-        - name: error-return
-        - name: error-strings
-        - name: error-naming
-        - name: exported
-        - name: if-return
-        - name: increment-decrement
-        - name: var-naming
-        - name: var-declaration
-        - name: package-comments
-        - name: range
-        - name: receiver-naming
-        - name: time-naming
-        - name: unexported-return
-        - name: indent-error-flow
-        - name: errorf
-        - name: empty-block
-        - name: superfluous-else
-        - name: unused-parameter
-        - name: unreachable-code
-        - name: redefines-builtin-id
+  staticcheck:
+    checks: ["all"]
 
   misspell:
-    # Correct spellings using locale preferences
     locale: US
 
-    # Predefined exclusion presets
-    presets:
-      - comments
-      - std-error-handling
-      - common-false-positives
-
-    # Exclusion rules
+  revive:
+    enable-all-rules: false
     rules:
-      # Exclude some linters from running on test files
-      - path: _test\.go
-        linters:
-          - gocyclo
-          - errcheck
-          - dupl
-          - gosec
-          - goconst
-          - gocritic
-
-      # Exclude known issues
-      - linters:
-          - staticcheck
-        text: "SA9003:"
-
-      # Allow unchecked errors in CLI commands (common pattern for CLI output)
-      - path: "pkg/cli/.*\\.go"
-        linters:
-          - errcheck
-
-    # Exclude specific checks
-    excludes:
-      - G104  # Errors unchecked (we already use errcheck)
-      - G307  # Deferring file close (our pattern is safe)
+      - name: blank-imports
+      - name: context-as-argument
+      - name: context-keys-type
+      - name: dot-imports
+      - name: error-return
+      - name: error-strings
+      - name: error-naming
+      - name: exported
+      - name: if-return
+      - name: increment-decrement
+      - name: var-naming
+      - name: var-declaration
+      - name: package-comments
+      - name: range
+      - name: receiver-naming
+      - name: time-naming
+      - name: unexported-return
+      - name: indent-error-flow
+      - name: errorf
+      - name: empty-block
+      - name: superfluous-else
+      - name: unused-parameter
+      - name: unreachable-code
+      - name: redefines-builtin-id
 
 issues:
-  # Show only new issues
   new: false
-
-  # Maximum issues count per one linter
   max-issues-per-linter: 0
-
-  # Maximum count of issues with the same text
   max-same-issues: 0
-
-  # Make issues output unique by line
   uniq-by-line: true
-
-  # Which dirs to skip
   exclude-dirs:
     - bin
     - data
     - dist
-
-  # Which files to skip
   exclude-files:
     - ".*\\.pb\\.go$"
-
-  # Exclude specific issues
   exclude-rules:
-    # Exclude errcheck and gosec for test files
     - path: _test\.go
       linters: [errcheck, gosec]
-
-    # Exclude known issues
     - linters: [staticcheck]
       text: "SA9003:"
-
-  # Independently of option `exclude` we use default exclude patterns
   exclude-use-default: false

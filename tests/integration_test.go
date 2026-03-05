@@ -327,10 +327,26 @@ func TestHTTPAPI(t *testing.T) {
 		apiCmd.Wait()
 	}()
 
-	// Give server time to start
-	time.Sleep(2 * time.Second)
-
+	// Wait for server to be ready with health check
 	baseURL := cfg.ServerURL()
+	healthCtx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	for {
+		select {
+		case <-healthCtx.Done():
+			t.Fatalf("server did not become ready within timeout")
+		case <-time.After(100 * time.Millisecond):
+			resp, err := http.Get(baseURL + "/api/v1/health")
+			if err == nil {
+				resp.Body.Close()
+				if resp.StatusCode == http.StatusOK {
+					goto serverReady
+				}
+			}
+		}
+	}
+serverReady:
 
 	t.Run("health_endpoint", func(t *testing.T) {
 		resp, err := http.Get(baseURL + "/api/v1/health")
