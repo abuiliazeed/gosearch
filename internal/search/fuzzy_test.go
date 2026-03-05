@@ -194,7 +194,7 @@ func TestDamerauLevenshteinDistance(t *testing.T) {
 			name:     "Transposition with other edits",
 			a:        "algorithm",
 			b:        "alogrithm", //nolint:misspell // Intentional typo for Damerau-Levenshtein transposition test
-			expected: 1, // "al" -> "la" is a transposition
+			expected: 1,           // "al" -> "la" is a transposition
 		},
 	}
 
