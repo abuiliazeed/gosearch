@@ -1,0 +1,84 @@
+name: Feature Request
+description: Suggest an idea or enhancement for gosearch
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new feature! Please fill out the form below.
+
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: Feature description
+      description: A clear and concise description of the feature you'd like to see added.
+      placeholder: "I would like gosearch to support..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use case
+      description: Describe the specific use case or problem this feature would solve.
+      placeholder: "When crawling sites with..., I need..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed solution
+      description: If you have an idea for how this could be implemented, please describe it.
+      placeholder: "I think this could be implemented by adding a new flag..."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: Which part of gosearch would this affect?
+      options:
+        - Crawler
+        - Indexer
+        - Search
+        - CLI/TUI
+        - Configuration
+        - Documentation
+        - New component
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this feature to you?
+      options:
+        - Critical - blocks my work
+        - High - very useful
+        - Medium - nice to have
+        - Low - minor enhancement
+    validations:
+      required: false
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternative solutions
+      description: Have you considered any alternative solutions or workarounds?
+      placeholder: "I've tried using..., but..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add any other context, screenshots, or examples about the feature request.
+      placeholder: "Here's a mockup of how I imagine this working..."
+    validations:
+      required: false

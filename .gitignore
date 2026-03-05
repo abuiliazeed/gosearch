@@ -1,0 +1,79 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+bin/
+dist/
+gosearch
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+coverage.html
+
+# Go workspace file
+go.work
+
+# Dependency directories
+vendor/
+
+# Data directories (any folder starting with "data")
+data*/
+*.db
+
+# Local markdown export output directories
+/exports/
+/exports-*/
+/domain-exports/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.local
+
+# Log files
+*.log
+
+# Config files (local)
+.gosearch.yaml
+gosearch.yaml
+
+# Development tools
+.auto-claude/
+.auto-claude-security.json
+.auto-claude-status
+.claude_settings.json
+.canopy/
+.claude/
+.conductor/
+.mulch/
+.overstory/
+.seeds/
+.venv/
+.worktrees/
+.security-key
+
+# Generated data
+logs/security/
+clustered_summaries/
+md/
+seeds/
+
+# Development files
+prompt.md
+test_debug.txt
+test_output.txt

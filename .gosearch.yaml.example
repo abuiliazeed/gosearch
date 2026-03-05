@@ -1,0 +1,37 @@
+# gosearch Configuration Example
+#
+# Copy this file to ~/.gosearch.yaml or .gosearch.yaml and modify as needed.
+#
+# Configuration is loaded from:
+# 1. Command-line flags (highest priority)
+# 2. Environment variables (prefixed with GOSEARCH_)
+# 3. Configuration file
+# 4. Default values (lowest priority)
+
+# Data directory for index and pages
+data-dir: "./data"
+
+# Logging configuration
+log-level: "info"           # debug, info, warn, error
+log-format: "text"          # text or json
+
+# Redis cache configuration
+redis-host: "localhost:6379"
+redis-password: ""
+redis-cache-ttl: 3600       # Query cache TTL in seconds
+
+# Crawler configuration
+max-workers: 10             # Max concurrent crawler workers
+crawl-delay: 1000           # Delay between requests in milliseconds
+max-depth: 3                # Max crawl depth from seed
+user-agent: "GoSearch/1.0"  # User-Agent string
+respect-robots: true        # Respect robots.txt
+
+# Index paths (optional, derived from data-dir if not specified)
+# index-path: "./data/index"
+# pages-path: "./data/pages"
+
+# CORS configuration for API server
+# cors-allowed-origins: "*"           # Comma-separated origins, use "*" for wildcard (not recommended for production)
+# cors-allowed-methods: "GET, POST, PUT, DELETE, OPTIONS"
+# cors-allowed-headers: "Content-Type, Authorization"

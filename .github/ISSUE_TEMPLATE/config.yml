@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Questions and Discussion
+    url: https://github.com/abuiliazeed/gosearch/discussions
+    about: Use GitHub Discussions for questions, ideas, or general discussion.
+  - name: Documentation
+    url: https://github.com/abuiliazeed/gosearch/blob/main/README.md
+    about: Read the README for usage examples and configuration options.
