@@ -15,6 +15,33 @@
 
 ---
 
+## Why gosearch?
+
+| Feature | gosearch | Bleve | Zinc | Meilisearch |
+|---------|----------|-------|------|-------------|
+| **Zero dependencies** | ✅ Single binary | ❌ Requires indexing lib | ❌ Heavy deps | ❌ Requires server |
+| **Markdown-native** | ✅ Built for LLMs | ❌ Generic docs | ❌ JSON only | ❌ JSON only |
+| **Self-contained** | ✅ No external DB | ❌ Needs storage backend | ❌ Needs Elasticsearch | ❌ Separate server |
+| **CLI-first** | ✅ TUI + commands | ❌ Library only | ⚠️ API-first | ❌ API-only |
+| **Learning resource** | ✅ Clean Go code | ⚠️ Complex codebase | ⚠️ Forked from Zinc | ❌ Rust codebase |
+| **Footprint** | ~15MB binary | ~50MB+ | ~100MB+ | ~150MB+ |
+
+### When to use gosearch
+
+- **AI/LLM workflows** — Markdown output ready for RAG pipelines
+- **Learning search engines** — Clean, readable Go implementation
+- **Lightweight deployments** — Single binary, no infrastructure
+- **CLI automation** — Scriptable search and crawl operations
+- **Offline search** — Self-contained, no internet required
+
+### When to use alternatives
+
+- **Production scale** — Meilisearch for millions of docs
+- **Full-text search** — Bleve for existing Go apps
+- **Multi-tenant SaaS** — Zinc for API-first applications
+
+---
+
 ## Features
 
 - **Web Crawling** — Concurrent crawler with Colly framework and configurable queue limits

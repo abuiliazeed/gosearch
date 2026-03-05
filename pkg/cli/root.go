@@ -14,6 +14,20 @@ import (
 	"github.com/spf13/viper"
 )
 
+// Version info set by main
+var (
+	version = "dev"
+	commit  = "none"
+	date    = "unknown"
+)
+
+// SetVersion sets the version info from main (injected by goreleaser)
+func SetVersion(v, c, d string) {
+	version = v
+	commit = c
+	date = d
+}
+
 var rootCmd = &cobra.Command{
 	Use:   "gosearch",
 	Short: "A lightweight web search engine",
