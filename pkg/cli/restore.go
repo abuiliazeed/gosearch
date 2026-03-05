@@ -57,7 +57,7 @@ func runRestore(cmd *cobra.Command, args []string) error {
 		autoBackupFile := filepath.Join(dataDir, "backups", fmt.Sprintf("pre-restore-%s.db", timestamp))
 
 		fmt.Printf("Creating backup of current index to %s...\n", autoBackupFile)
-		if err := os.MkdirAll(filepath.Dir(autoBackupFile), 0755); err != nil {
+		if err := os.MkdirAll(filepath.Dir(autoBackupFile), 0o755); err != nil {
 			return fmt.Errorf("failed to create backup directory: %w", err)
 		}
 
@@ -83,7 +83,7 @@ func runRestore(cmd *cobra.Command, args []string) error {
 
 	// Ensure index directory exists
 	indexDir := filepath.Dir(indexPath)
-	if err := os.MkdirAll(indexDir, 0755); err != nil {
+	if err := os.MkdirAll(indexDir, 0o755); err != nil {
 		return fmt.Errorf("failed to create index directory: %w", err)
 	}
 

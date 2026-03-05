@@ -29,12 +29,12 @@ var (
 // NewIndexStore creates a new IndexStore with the given file path.
 func NewIndexStore(filePath string) (*IndexStore, error) {
 	// Create directory if it doesn't exist
-	if err := os.MkdirAll(filepath.Dir(filePath), 0755); err != nil {
+	if err := os.MkdirAll(filepath.Dir(filePath), 0o755); err != nil {
 		return nil, fmt.Errorf("failed to create index store directory: %w", err)
 	}
 
 	// Open database
-	db, err := bolt.Open(filePath, 0600, &bolt.Options{Timeout: 30 * time.Second})
+	db, err := bolt.Open(filePath, 0o600, &bolt.Options{Timeout: 30 * time.Second})
 	if err != nil {
 		return nil, fmt.Errorf("failed to open database: %w", err)
 	}
@@ -58,7 +58,6 @@ func NewIndexStore(filePath string) (*IndexStore, error) {
 		}
 		return nil
 	})
-
 	if err != nil {
 		_ = db.Close()
 		return nil, err
@@ -103,7 +102,6 @@ func (is *IndexStore) GetMeta() (*IndexMeta, error) {
 		}
 		return json.Unmarshal(data, &meta)
 	})
-
 	if err != nil {
 		return nil, err
 	}
@@ -147,7 +145,6 @@ func (is *IndexStore) GetTermInfo(term string) (*TermInfo, error) {
 		}
 		return json.Unmarshal(data, &info)
 	})
-
 	if err != nil {
 		return nil, err
 	}
@@ -172,7 +169,6 @@ func (is *IndexStore) ListTerms() ([]string, error) {
 			return nil
 		})
 	})
-
 	if err != nil {
 		return nil, err
 	}
@@ -249,7 +245,6 @@ func (is *IndexStore) GetDocumentURL(docID string) (string, error) {
 		url = urlVal
 		return nil
 	})
-
 	if err != nil {
 		return "", err
 	}
@@ -259,7 +254,7 @@ func (is *IndexStore) GetDocumentURL(docID string) (string, error) {
 // Backup creates a backup of the index store to the given destination.
 func (is *IndexStore) Backup(dest string) error {
 	return is.db.View(func(tx *bolt.Tx) error {
-		return tx.CopyFile(dest, 0600)
+		return tx.CopyFile(dest, 0o600)
 	})
 }
 
@@ -277,7 +272,6 @@ func (is *IndexStore) Stats() (map[string]int64, error) {
 		}
 		return nil
 	})
-
 	if err != nil {
 		return nil, err
 	}
@@ -325,7 +319,6 @@ func (is *IndexStore) LoadPostings(term string) (*PersistedPostingsList, error) 
 		}
 		return json.Unmarshal(data, &plist)
 	})
-
 	if err != nil {
 		return nil, err
 	}
@@ -345,7 +338,6 @@ func (is *IndexStore) ListAllPostings() ([]string, error) {
 			return nil
 		})
 	})
-
 	if err != nil {
 		return nil, err
 	}
@@ -401,7 +393,6 @@ func (is *IndexStore) LoadDocInfo(docID string) (*PersistedDocInfo, error) {
 		}
 		return json.Unmarshal(data, &docInfo)
 	})
-
 	if err != nil {
 		return nil, err
 	}
@@ -421,7 +412,6 @@ func (is *IndexStore) ListAllDocInfo() ([]string, error) {
 			return nil
 		})
 	})
-
 	if err != nil {
 		return nil, err
 	}

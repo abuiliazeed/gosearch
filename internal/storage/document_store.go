@@ -19,7 +19,7 @@ type DocumentStore struct {
 
 // NewDocumentStore creates a new DocumentStore with the given base directory.
 func NewDocumentStore(baseDir string) (*DocumentStore, error) {
-	if err := os.MkdirAll(baseDir, 0755); err != nil {
+	if err := os.MkdirAll(baseDir, 0o755); err != nil {
 		return nil, fmt.Errorf("failed to create document store directory: %w", err)
 	}
 	return &DocumentStore{baseDir: baseDir}, nil
@@ -35,7 +35,7 @@ func (ds *DocumentStore) Save(doc *Document) error {
 	filePath := ds.filePath(doc.ID)
 
 	// Create parent directory if it doesn't exist
-	if err := os.MkdirAll(filepath.Dir(filePath), 0755); err != nil {
+	if err := os.MkdirAll(filepath.Dir(filePath), 0o755); err != nil {
 		return fmt.Errorf("failed to create directory: %w", err)
 	}
 
@@ -138,7 +138,6 @@ func (ds *DocumentStore) List() ([]string, error) {
 		}
 		return nil
 	})
-
 	if err != nil {
 		return nil, fmt.Errorf("failed to list documents: %w", err)
 	}
@@ -195,7 +194,7 @@ func (ds *DocumentStore) Backup(dest string) error {
 		}
 
 		destPath := filepath.Join(dest, relPath)
-		if err := os.MkdirAll(filepath.Dir(destPath), 0755); err != nil {
+		if err := os.MkdirAll(filepath.Dir(destPath), 0o755); err != nil {
 			return err
 		}
 

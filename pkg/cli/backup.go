@@ -55,7 +55,7 @@ func runBackup(cmd *cobra.Command, args []string) error {
 		// Create timestamped backup file
 		timestamp := time.Now().Format("20060102-150405")
 		backupDir := filepath.Join(dataDir, "backups")
-		if err := os.MkdirAll(backupDir, 0755); err != nil {
+		if err := os.MkdirAll(backupDir, 0o755); err != nil {
 			return fmt.Errorf("failed to create backup directory: %w", err)
 		}
 		outputFile = filepath.Join(backupDir, fmt.Sprintf("index-backup-%s.db", timestamp))
@@ -63,7 +63,7 @@ func runBackup(cmd *cobra.Command, args []string) error {
 
 	// Ensure output directory exists
 	outputDir := filepath.Dir(outputFile)
-	if err := os.MkdirAll(outputDir, 0755); err != nil {
+	if err := os.MkdirAll(outputDir, 0o755); err != nil {
 		return fmt.Errorf("failed to create output directory: %w", err)
 	}
 

@@ -526,7 +526,6 @@ func TestEncodePostingsListRoundTrip(t *testing.T) {
 	for _, pl := range testCases {
 		encoded := EncodePostingsList(pl)
 		decoded, err := DecodePostingsList(encoded)
-
 		if err != nil {
 			t.Errorf("DecodePostingsList() error = %v", err)
 			continue

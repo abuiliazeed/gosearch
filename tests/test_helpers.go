@@ -153,7 +153,7 @@ func SetupTestDir(dataDir string) error {
 
 	for _, dir := range dirs {
 		// #nosec G301 -- Test code, temp directory with known permissions
-		if err := os.MkdirAll(dir, 0755); err != nil {
+		if err := os.MkdirAll(dir, 0o755); err != nil {
 			return fmt.Errorf("failed to create directory %s: %w", dir, err)
 		}
 	}
@@ -172,7 +172,7 @@ func CleanupTestDir(dataDir string) error {
 // WriteSampleHTML writes sample HTML to a file for testing.
 func WriteSampleHTML(path string, html string) error {
 	// #nosec G306 -- Test code, temp file with known permissions
-	return os.WriteFile(path, []byte(html), 0644)
+	return os.WriteFile(path, []byte(html), 0o644)
 }
 
 // ReadTestdata reads a file from the testdata directory.
