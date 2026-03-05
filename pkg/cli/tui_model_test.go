@@ -6,9 +6,10 @@ import (
 	"testing"
 	"time"
 
+	tea "github.com/charmbracelet/bubbletea"
+
 	"github.com/abuiliazeed/gosearch/internal/search"
 	"github.com/abuiliazeed/gosearch/internal/storage"
-	tea "github.com/charmbracelet/bubbletea"
 )
 
 func TestPaginationHelpers(t *testing.T) {

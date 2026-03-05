@@ -10,12 +10,13 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/abuiliazeed/gosearch/internal/crawler"
-	"github.com/abuiliazeed/gosearch/internal/indexer"
-	"github.com/abuiliazeed/gosearch/internal/storage"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
+
+	"github.com/abuiliazeed/gosearch/internal/crawler"
+	"github.com/abuiliazeed/gosearch/internal/indexer"
+	"github.com/abuiliazeed/gosearch/internal/storage"
 )
 
 var crawlCmd = &cobra.Command{

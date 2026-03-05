@@ -6,8 +6,9 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/abuiliazeed/gosearch/internal/storage"
 	"go.uber.org/zap"
+
+	"github.com/abuiliazeed/gosearch/internal/storage"
 )
 
 func TestIndexer_IndexAndPersistence(t *testing.T) {

@@ -6,12 +6,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/abuiliazeed/gosearch/internal/search"
-	"github.com/abuiliazeed/gosearch/internal/storage"
 	"github.com/charmbracelet/bubbles/textinput"
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+
+	"github.com/abuiliazeed/gosearch/internal/search"
+	"github.com/abuiliazeed/gosearch/internal/storage"
 )
 
 type tuiMode int

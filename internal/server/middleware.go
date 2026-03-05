@@ -64,10 +64,12 @@ func RecoveryMiddleware(next http.Handler) http.Handler {
 				log.Printf("PANIC: %v", err)
 				w.Header().Set("Content-Type", "application/json")
 				w.WriteHeader(http.StatusInternalServerError)
-				json.NewEncoder(w).Encode(ErrorResponse{
+				if encodeErr := json.NewEncoder(w).Encode(ErrorResponse{
 					Error:   "internal_server_error",
 					Message: "An unexpected error occurred",
-				})
+				}); encodeErr != nil {
+					log.Printf("Failed to encode error response: %v", encodeErr)
+				}
 			}
 		}()
 

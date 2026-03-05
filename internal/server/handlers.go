@@ -102,12 +102,14 @@ func (h *Handlers) HandleSearch(w http.ResponseWriter, r *http.Request) {
 
 	// Write response
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(SearchResponse{
+	if err := json.NewEncoder(w).Encode(SearchResponse{
 		TotalCount: searchResponse.TotalCount,
 		Results:    apiResults,
 		Query:      query,
 		DurationMs: duration.Milliseconds(),
-	})
+	}); err != nil {
+		log.Printf("Failed to encode search response: %v", err)
+	}
 }
 
 // extractSnippet extracts a snippet from content containing the query terms.
@@ -153,7 +155,7 @@ func extractSnippet(content string, terms []string) string {
 		snippet = "..." + snippet
 	}
 	if end < len(content) {
-		snippet = snippet + "..."
+		snippet += "..."
 	}
 
 	return snippet
@@ -203,7 +205,9 @@ func (h *Handlers) HandleStats(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(response)
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		log.Printf("Failed to encode stats response: %v", err)
+	}
 }
 
 // HandleHealth handles health check requests.
@@ -223,7 +227,9 @@ func (h *Handlers) HandleHealth(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(response)
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		log.Printf("Failed to encode health response: %v", err)
+	}
 }
 
 // HandleIndexRebuild handles index rebuild requests.
@@ -262,7 +268,9 @@ func (h *Handlers) HandleIndexRebuild(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(response)
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		log.Printf("Failed to encode index rebuild response: %v", err)
+	}
 }
 
 // HandleNotFound handles 404 errors.
@@ -274,8 +282,10 @@ func (h *Handlers) HandleNotFound(w http.ResponseWriter, r *http.Request) {
 func (h *Handlers) writeError(w http.ResponseWriter, status int, code, message string) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
-	json.NewEncoder(w).Encode(ErrorResponse{
+	if err := json.NewEncoder(w).Encode(ErrorResponse{
 		Error:   code,
 		Message: message,
-	})
+	}); err != nil {
+		log.Printf("Failed to encode error response: %v", err)
+	}
 }

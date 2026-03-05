@@ -10,9 +10,10 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/abuiliazeed/gosearch/internal/storage"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+
+	"github.com/abuiliazeed/gosearch/internal/storage"
 )
 
 const exportDocIDPrefixLen = 12

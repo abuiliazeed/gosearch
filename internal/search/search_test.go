@@ -5,10 +5,11 @@ import (
 	"os"
 	"testing"
 
+	"go.uber.org/zap"
+
 	"github.com/abuiliazeed/gosearch/internal/indexer"
 	"github.com/abuiliazeed/gosearch/internal/ranker"
 	"github.com/abuiliazeed/gosearch/internal/storage"
-	"go.uber.org/zap"
 )
 
 func TestSearcher_Search(t *testing.T) {

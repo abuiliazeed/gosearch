@@ -8,9 +8,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/abuiliazeed/gosearch/internal/storage"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+
+	"github.com/abuiliazeed/gosearch/internal/storage"
 )
 
 func TestNormalizeDomainInput(t *testing.T) {

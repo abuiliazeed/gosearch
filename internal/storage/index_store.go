@@ -60,7 +60,7 @@ func NewIndexStore(filePath string) (*IndexStore, error) {
 	})
 
 	if err != nil {
-		db.Close()
+		_ = db.Close()
 		return nil, err
 	}
 
@@ -242,7 +242,11 @@ func (is *IndexStore) GetDocumentURL(docID string) (string, error) {
 		if err := json.Unmarshal(data, &docInfo); err != nil {
 			return err
 		}
-		url = docInfo["url"].(string)
+		urlVal, ok := docInfo["url"].(string)
+		if !ok {
+			return fmt.Errorf("invalid url type in document info for %s", docID)
+		}
+		url = urlVal
 		return nil
 	})
 

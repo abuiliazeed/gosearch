@@ -27,7 +27,6 @@ func (s Strategy) String() string {
 
 // ParseStrategy parses a strategy string, defaulting to BFS.
 func ParseStrategy(s string) Strategy {
-
 	switch s {
 	case "bfs", "BFS", "breadth-first":
 		return StrategyBFS

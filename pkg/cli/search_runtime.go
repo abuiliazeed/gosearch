@@ -7,12 +7,13 @@ import (
 	"strings"
 	"time"
 
+	"github.com/spf13/viper"
+	"go.uber.org/zap"
+
 	"github.com/abuiliazeed/gosearch/internal/indexer"
 	"github.com/abuiliazeed/gosearch/internal/ranker"
 	"github.com/abuiliazeed/gosearch/internal/search"
 	"github.com/abuiliazeed/gosearch/internal/storage"
-	"github.com/spf13/viper"
-	"go.uber.org/zap"
 )
 
 type searchRuntime struct {

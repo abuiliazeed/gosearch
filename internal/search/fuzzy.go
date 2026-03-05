@@ -4,8 +4,6 @@
 // phrase queries, and result ranking with caching.
 package search
 
-import ()
-
 // LevenshteinDistance computes the Levenshtein distance between two strings.
 // The Levenshtein distance is the minimum number of single-character edits
 // (insertions, deletions, or substitutions) required to change one string into the other.

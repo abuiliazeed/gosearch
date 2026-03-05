@@ -15,12 +15,13 @@ import (
 	"testing"
 	"time"
 
+	"go.uber.org/zap"
+
 	"github.com/abuiliazeed/gosearch/internal/crawler"
 	"github.com/abuiliazeed/gosearch/internal/indexer"
 	"github.com/abuiliazeed/gosearch/internal/ranker"
 	"github.com/abuiliazeed/gosearch/internal/search"
 	"github.com/abuiliazeed/gosearch/internal/storage"
-	"go.uber.org/zap"
 )
 
 // TestFullPipeline tests the complete crawl -> index -> search pipeline.
