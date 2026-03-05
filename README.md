@@ -1,6 +1,8 @@
 # gosearch
 
 [![Quality Pipeline](https://github.com/abuiliazeed/gosearch/actions/workflows/quality.yml/badge.svg?branch=main)](https://github.com/abuiliazeed/gosearch/actions/workflows/quality.yml)
+[![Release](https://github.com/abuiliazeed/gosearch/actions/workflows/release.yml/badge.svg)](https://github.com/abuiliazeed/gosearch/releases)
+[![GitHub release](https://img.shields.io/github/release/abuiliazeed/gosearch.svg)](https://github.com/abuiliazeed/gosearch/releases)
 [![GoDoc](https://pkg.go.dev/badge/github.com/abuiliazeed/gosearch.svg)](https://pkg.go.dev/github.com/abuiliazeed/gosearch)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Go Version](https://img.shields.io/badge/Go-1.24.2-00ADD8.svg)](https://go.dev/)
@@ -64,12 +66,22 @@
 
 ### Install
 
+**Download binary (recommended):**
+
 ```bash
-# Clone the repository
+# macOS/Linux
+curl -sSL https://github.com/abuiliazeed/gosearch/releases/latest/download/gosearch_$(uname -s)_$(uname -m).tar.gz | tar xz
+sudo mv gosearch /usr/local/bin/
+
+# Or with Go
+go install github.com/abuiliazeed/gosearch/cmd/gosearch@latest
+```
+
+**Build from source:**
+
+```bash
 git clone https://github.com/abuiliazeed/gosearch.git
 cd gosearch
-
-# Build the binary
 go build -o bin/gosearch ./cmd/gosearch
 ```
 
