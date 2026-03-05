@@ -1,6 +1,8 @@
 # .goreleaser.yaml
 # https://goreleaser.com
 
+version: 2
+
 before:
   hooks:
     - go mod tidy
@@ -69,21 +71,3 @@ release:
   footer: |
     
     **Full Changelog**: https://github.com/abuiliazeed/gosearch/compare/{{ .PreviousTag }}...{{ .Tag }}
-
-brews:
-  - name: gosearch
-    homepage: "https://github.com/abuiliazeed/gosearch"
-    description: "A self-hosted search engine for AI agents"
-    license: "MIT"
-    repository:
-      owner: abuiliazeed
-      name: homebrew-tap
-      branch: main
-    commit_author:
-      name: Ahmed
-      email: abuiliazeed@gmail.com
-    directory: Formula
-    test: |
-      system "#{bin}/gosearch", "version"
-    install: |
-      bin.install "gosearch"
