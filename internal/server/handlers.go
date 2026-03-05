@@ -28,7 +28,7 @@ type Handlers struct {
 func NewHandlers(
 	indexer *indexer.Indexer,
 	searcher *search.Searcher,
-	ranker *ranker.Scorer,
+	_ *ranker.Scorer, // Reserved for future use
 	docStore *storage.DocumentStore,
 ) *Handlers {
 	return &Handlers{

@@ -63,7 +63,7 @@ func init() {
 	_ = viper.BindPFlag("serve.idle-timeout", serveCmd.Flags().Lookup("idle-timeout"))
 }
 
-func runServe(cmd *cobra.Command, args []string) error {
+func runServe(_ *cobra.Command, _ []string) error {
 	// Get configuration
 	dataDir := viper.GetString("data-dir")
 	if err := requireSchemaVersion(dataDir); err != nil {
@@ -79,15 +79,6 @@ func runServe(cmd *cobra.Command, args []string) error {
 
 	// Initialize components
 	fmt.Println("Initializing gosearch server...")
-
-	// Create index store
-	indexPath := viper.GetString("index-path")
-	if indexPath == "" {
-		indexPath = dataDir + "/index"
-	} else {
-		// indexPath already set via config
-		_ = indexPath // Explicitly mark as used to satisfy staticcheck
-	}
 
 	// Get timeout values
 	readTimeout := viper.GetDuration("serve.read-timeout")

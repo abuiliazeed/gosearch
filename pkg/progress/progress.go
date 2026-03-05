@@ -210,12 +210,12 @@ func NewSilent() *SilentProgress {
 }
 
 // Add does nothing.
-func (sp *SilentProgress) Add(n int64) error {
+func (sp *SilentProgress) Add(_ int64) error {
 	return nil
 }
 
 // Set does nothing.
-func (sp *SilentProgress) Set(n int64) error {
+func (sp *SilentProgress) Set(_ int64) error {
 	return nil
 }
 
@@ -225,4 +225,4 @@ func (sp *SilentProgress) Close() error {
 }
 
 // Describe does nothing.
-func (sp *SilentProgress) Describe(description string) {}
+func (sp *SilentProgress) Describe(_ string) {}

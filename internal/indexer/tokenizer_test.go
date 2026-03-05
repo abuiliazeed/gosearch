@@ -69,7 +69,7 @@ func TestTokenizer_Normalization(t *testing.T) {
 	expected := []string{"golang"}
 
 	tokens := tokenizer.Tokenize(text)
-	var got []string
+	got := make([]string, 0, len(tokens))
 	for _, token := range tokens {
 		got = append(got, token.Text)
 	}

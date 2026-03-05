@@ -336,7 +336,7 @@ func determineSeeds(args []string, seedSet string, seedsFile string) []string {
 }
 
 // listAvailableSeedSets prints all available predefined seed sets.
-func listAvailableSeedSets(cmd *cobra.Command) error {
+func listAvailableSeedSets(_ *cobra.Command) error {
 	fmt.Println("Available predefined seed sets:")
 	fmt.Println()
 

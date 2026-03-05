@@ -121,6 +121,21 @@ func runMDExport(cmd *cobra.Command, args []string) error {
 
 		fileName := buildExportFilename(parsedDocURL.Path, doc.ID)
 		filePath := filepath.Join(outputPath, fileName)
+
+		// Security: Validate that filePath is within outputPath to prevent path traversal
+		absOutputPath, err := filepath.Abs(outputPath)
+		if err != nil {
+			return fmt.Errorf("failed to resolve output path: %w", err)
+		}
+		absFilePath, err := filepath.Abs(filePath)
+		if err != nil {
+			return fmt.Errorf("failed to resolve file path: %w", err)
+		}
+		relPath, err := filepath.Rel(absOutputPath, absFilePath)
+		if err != nil || strings.HasPrefix(relPath, "..") {
+			return fmt.Errorf("invalid file path %s: outside output directory", filePath)
+		}
+
 		if err := os.WriteFile(filePath, []byte(doc.ContentMarkdown), 0o644); err != nil {
 			return fmt.Errorf("failed to write markdown for document %s: %w", docID, err)
 		}

@@ -78,7 +78,7 @@ func TestBrowserCommandForOS(t *testing.T) {
 func TestOpenURLInBrowserForOS_CommandFailure(t *testing.T) {
 	commandErr := errors.New("boom")
 
-	factory := func(name string, args ...string) commandRunner {
+	factory := func(_ string, _ ...string) commandRunner {
 		return fakeCommandRunner{runErr: commandErr}
 	}
 

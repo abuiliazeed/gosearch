@@ -151,9 +151,7 @@ func (pm *PolitenessManager) getRobots(baseURL string) (*robotstxt.RobotsData, e
 		return nil, err
 	}
 	defer func() {
-		if closeErr := resp.Body.Close(); closeErr != nil {
-			// Log error but don't fail
-		}
+		_ = resp.Body.Close() // Log error but don't fail
 	}()
 
 	// Parse robots.txt

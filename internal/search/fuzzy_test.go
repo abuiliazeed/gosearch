@@ -77,7 +77,7 @@ func TestLevenshteinDistance(t *testing.T) {
 		{
 			name:     "Longer strings with one diff",
 			a:        "algorithm",
-			b:        "alogrithm",
+			b:        "alogrithm", //nolint:misspell // Intentional typo for Levenshtein distance test
 			expected: 2,
 		},
 		{
@@ -180,7 +180,7 @@ func TestDamerauLevenshteinDistance(t *testing.T) {
 		},
 		{
 			name:     "Common typo example",
-			a:        "recieve",
+			a:        "recieve", //nolint:misspell // Intentional typo for Damerau-Levenshtein transposition test
 			b:        "receive",
 			expected: 1,
 		},
@@ -193,7 +193,7 @@ func TestDamerauLevenshteinDistance(t *testing.T) {
 		{
 			name:     "Transposition with other edits",
 			a:        "algorithm",
-			b:        "alogrithm",
+			b:        "alogrithm", //nolint:misspell // Intentional typo for Damerau-Levenshtein transposition test
 			expected: 1, // "al" -> "la" is a transposition
 		},
 	}

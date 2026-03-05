@@ -219,9 +219,8 @@ func (m tuiModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.status = fmt.Sprintf("No results for %q.", message.query)
 			}
 			return m, nil
-		} else {
-			m.status = fmt.Sprintf("Search complete for %q", message.query)
 		}
+		m.status = fmt.Sprintf("Search complete for %q", message.query)
 
 		m.inlinePreviewPreloadQuery = strings.TrimSpace(message.query)
 		m.inlinePreviewPreloadWidth = m.inlinePreviewRenderWidth()

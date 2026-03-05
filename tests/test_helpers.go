@@ -134,7 +134,7 @@ func SkipIfMissingBinary(t *testing.T, binPath string) {
 }
 
 // SkipIfNoRedis skips the test if Redis is not available.
-func SkipIfNoRedis(t *testing.T, addr string) {
+func SkipIfNoRedis(t *testing.T, _ string) {
 	// Simple check - try to connect to Redis
 	// In a real scenario, we'd check if Redis is running
 	// For now, we'll skip if the REDIS_TEST environment variable is not set

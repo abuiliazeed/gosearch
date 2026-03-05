@@ -272,7 +272,7 @@ func (p *Parser) ExtractTerms(parsed *ParsedQuery) []string {
 		return parsed.Terms
 	case QueryTypeBoolean:
 		if parsed.Boolean != nil {
-			terms := make([]string, 0)
+			terms := make([]string, 0, len(parsed.Boolean.AndTerms)+len(parsed.Boolean.OrTerms))
 			terms = append(terms, parsed.Boolean.AndTerms...)
 			terms = append(terms, parsed.Boolean.OrTerms...)
 			return terms

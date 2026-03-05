@@ -1,5 +1,6 @@
 # golangci-lint configuration for gosearch
 # https://golangci-lint.run/usage/configuration/
+version: 2
 
 run:
   # Timeout for analysis
@@ -13,8 +14,7 @@ run:
 
 output:
   # Format: colored-line-number|line-number|json|tab|checkstyle|code-climate
-  formats:
-    - format: colored-line-number
+  format: colored-line-number
 
   # Print lines of code with issue
   print-issued-lines: true
@@ -28,20 +28,15 @@ output:
 linters:
   # Enable specific linters
   enable:
-    - gofmt
     - govet
     - errcheck
     - staticcheck
     - unused
-    - gosimple
     - ineffassign
-    - typecheck
-    - goimports
     - misspell
     - gocritic
     - gosec
     - revive
-    - stylecheck
     - unconvert
     - unparam
     - prealloc
