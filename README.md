@@ -1,8 +1,7 @@
 # gosearch
 
 [![Quality Pipeline](https://github.com/abuiliazeed/gosearch/actions/workflows/quality.yml/badge.svg?branch=main)](https://github.com/abuiliazeed/gosearch/actions/workflows/quality.yml)
-[![Release](https://github.com/abuiliazeed/gosearch/actions/workflows/release.yml/badge.svg)](https://github.com/abuiliazeed/gosearch/releases)
-[![GitHub release](https://img.shields.io/github/release/abuiliazeed/gosearch.svg)](https://github.com/abuiliazeed/gosearch/releases)
+[![GitHub release](https://img.shields.io/github/v/release/abuiliazeed/gosearch?color=blue)](https://github.com/abuiliazeed/gosearch/releases)
 [![GoDoc](https://pkg.go.dev/badge/github.com/abuiliazeed/gosearch.svg)](https://pkg.go.dev/github.com/abuiliazeed/gosearch)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Go Version](https://img.shields.io/badge/Go-1.24.2-00ADD8.svg)](https://go.dev/)
