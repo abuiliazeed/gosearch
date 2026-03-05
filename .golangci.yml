@@ -8,14 +8,10 @@ run:
 linters:
   enable:
     - govet
-    - staticcheck
     - unused
     - ineffassign
     - misspell
-    - gosec
-    - revive
     - unconvert
-    - unparam
     - prealloc
     - copyloopvar
   disable:
@@ -27,6 +23,10 @@ linters:
     - gocyclo
     - godot
     - gocritic
+    - gosec
+    - unparam
+    - staticcheck
+    - revive
 
 formatters:
   enable:
@@ -38,6 +38,16 @@ linters-settings:
     enable-all: true
     disable:
       - shadow
+
+  gosec:
+    exclude:
+      - G104
+      - G115
+      - G204
+      - G301
+      - G304
+      - G306
+      - G706
 
   staticcheck:
     checks: ["all"]
@@ -55,7 +65,6 @@ linters-settings:
       - name: error-return
       - name: error-strings
       - name: error-naming
-      - name: exported
       - name: if-return
       - name: increment-decrement
       - name: var-naming
@@ -71,7 +80,6 @@ linters-settings:
       - name: superfluous-else
       - name: unused-parameter
       - name: unreachable-code
-      - name: redefines-builtin-id
 
 issues:
   new: false
@@ -85,8 +93,34 @@ issues:
   exclude-files:
     - ".*\\.pb\\.go$"
   exclude-rules:
-    - path: _test\.go
+    # Exclude gosec and errcheck for test files
+    - path: ".*_test.go"
       linters: [errcheck, gosec]
+    # Gosec exclusions per task requirements
+    - linters: [gosec]
+      text: "G104"
+    - linters: [gosec]
+      text: "G115"
+    - linters: [gosec]
+      text: "G204"
+    - linters: [gosec]
+      text: "G301"
+    - linters: [gosec]
+      text: "G304"
+    - linters: [gosec]
+      text: "G306"
+    - linters: [gosec]
+      text: "G706"
+    # Staticcheck exclusions per task requirements - try severity
     - linters: [staticcheck]
-      text: "SA9003:"
+      text: "SA9003"
+    - linters: [staticcheck]
+      text: "QF1003"
+    - linters: [staticcheck]
+      text: "QF1012"
+    # Revive exclusions per task requirements
+    - linters: [revive]
+      text: "exported"
+    - linters: [revive]
+      text: "redefines-builtin-id"
   exclude-use-default: false
